@@ -24,4 +24,5 @@ urlpatterns = [
     path("gastos/", include("apps.gastos.urls")), 
     path("publicaciones/", include("apps.publicaciones.urls")),  # Agregar publicaciones
     path("transferencias/", include("apps.transferencias.urls")),  # Agregar transferencias
+    path("vehiculos/", include("apps.vehiculos.urls")),  # Agregar vehículos
 ]
