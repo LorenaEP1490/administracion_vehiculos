@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Transferencia{% endblock %}
+
+{% block content %}
+<h2>¿Estás seguro de que deseas eliminar esta transferencia?</h2>
+<p><strong>Fecha:</strong> {{ transferencia.fecha_transferencia }}</p>
+<p><strong>Comprador:</strong> {{ transferencia.comprador }}</p>
+<p><strong>DNI Comprador:</strong> {{ transferencia.dni_comprador }}</p>
+<p><strong>Estado:</strong> {{ transferencia.estado }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'lista_transferencias' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
