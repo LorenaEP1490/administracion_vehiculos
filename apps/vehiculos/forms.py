@@ -10,7 +10,7 @@ class VehiculoForm(forms.ModelForm):
             "modelo",
             "año",
             "version",
-            "color_exterior",
+            "color",
             "kilometros",
             "tipo_combustible",
             "transmision",
