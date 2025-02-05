@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar Vehículo{% endblock %}
+
+{% block content %}
+<h2>Buscar Vehículo</h2>
+<form id="buscarVehiculoForm">
+    {% csrf_token %}
+    <label for="dominio">Ingrese el Dominio del Vehículo:</label>
+    <input type="text" id="dominio" name="dominio" class="form-control" required>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+<div id="resultado" class="mt-3"></div>
+
+<script>
+    document.getElementById("buscarVehiculoForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let dominio = document.getElementById("dominio").value;
+
+        fetch(`/vehiculos/buscar/${dominio}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.existe) {
+                    document.getElementById("resultado").innerHTML = `<p class="text-success">Vehículo encontrado: ${data.marca} ${data.modelo} (${data.año})</p>`;
+                    
+                    // Guardar dominio seleccionado
+                    localStorage.setItem("dominioSeleccionado", dominio);
+
+                    // Habilitar enlaces de otras apps
+                    document.getElementById("link-inspecciones").classList.remove("disabled");
+                    document.getElementById("link-gastos").classList.remove("disabled");
+                    document.getElementById("link-publicaciones").classList.remove("disabled");
+                    document.getElementById("link-transferencias").classList.remove("disabled");
+                } else {
+                    document.getElementById("resultado").innerHTML = `<p class="text-danger">Vehículo no encontrado. <a href="{% url 'crear_vehiculo' %}">Registrar nuevo vehículo</a></p>`;
+                }
+            });
+    });
+</script>
+{% endblock %}

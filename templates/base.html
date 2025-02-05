@@ -9,18 +9,50 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">Gestión de Vehículos</a>
-        </div>
-    </nav>
+    <div class="d-flex">
+        <!-- Menú lateral -->
+        <nav class="bg-primary text-white p-3 sidebar">
+            <h4 class="text-center">Menú</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'lista_vehiculos' %}">🚗 Vehículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'buscar_vehiculo' %}">🔎 Buscar Vehículo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white disabled" id="link-inspecciones" href="{% url 'lista_inspecciones' %}">🔧 Inspecciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white disabled" id="link-gastos" href="{% url 'lista_gastos' %}">💰 Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white disabled" id="link-publicaciones" href="{% url 'lista_publicaciones' %}">📢 Publicaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white disabled" id="link-transferencias" href="{% url 'lista_transferencias' %}">📜 Transferencias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{% url 'logout' %}">🚪 Cerrar Sesión</a>
+                </li>
+            </ul>
+        </nav>
 
-    <div class="container mt-4">
-        {% block content %}{% endblock %}
+        <!-- Contenido principal -->
+        <div class="container mt-4">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 
-    <footer class="bg-light text-center p-3 mt-4">
-        © 2025 Gestión Vehículos - Todos los derechos reservados.
-    </footer>
+    <script>
+        // Deshabilitar opciones hasta que se seleccione un vehículo con dominio
+        let dominioSeleccionado = localStorage.getItem("dominioSeleccionado");
+        if (dominioSeleccionado) {
+            document.getElementById("link-inspecciones").classList.remove("disabled");
+            document.getElementById("link-gastos").classList.remove("disabled");
+            document.getElementById("link-publicaciones").classList.remove("disabled");
+            document.getElementById("link-transferencias").classList.remove("disabled");
+        }
+    </script>
 </body>
 </html>
