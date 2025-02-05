@@ -22,7 +22,7 @@ class VehiculoForm(forms.ModelForm):
             "modelo": forms.TextInput(attrs={"class": "form-control"}),
             "año": forms.NumberInput(attrs={"class": "form-control"}),
             "version": forms.TextInput(attrs={"class": "form-control"}),
-            "color_exterior": forms.TextInput(attrs={"class": "form-control"}),
+            "color": forms.TextInput(attrs={"class": "form-control"}),
             "kilometros": forms.NumberInput(attrs={"class": "form-control"}),
             "tipo_combustible": forms.Select(attrs={"class": "form-control"}),
             "transmision": forms.Select(attrs={"class": "form-control"}),
