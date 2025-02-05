@@ -18,7 +18,17 @@
                     <a class="nav-link text-white" href="{% url 'lista_vehiculos' %}">🚗 Vehículos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'buscar_vehiculo' %}">🔎 Buscar Vehículo</a>
+                    <a class="nav-link text-white" href="#" id="buscarVehiculoLink">🔎 Buscar Vehículo</a>
+                    <script>
+                        document.getElementById("buscarVehiculoLink").addEventListener("click", function(event) {
+                            event.preventDefault();
+                            let dominio = prompt("Ingrese el dominio del vehículo:");
+                            if (dominio) {
+                                window.location.href = `/vehiculos/buscar/${dominio}/`;
+                            }
+                        });
+                    </script>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white disabled" id="link-inspecciones" href="{% url 'lista_inspecciones' %}">🔧 Inspecciones</a>

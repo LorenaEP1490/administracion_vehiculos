@@ -7,4 +7,4 @@ urlpatterns = [
     path("editar/<int:pk>/", editar_vehiculo, name="editar_vehiculo"),
     path("eliminar/<int:pk>/", eliminar_vehiculo, name="eliminar_vehiculo"),
     path("buscar/<str:dominio>/", buscar_vehiculo, name="buscar_vehiculo"),
-]
+    ]
