@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Gasto{% endblock %}
+
+{% block content %}
+<h2>¿Estás seguro de que deseas eliminar este gasto?</h2>
+<p><strong>Fecha:</strong> {{ gasto.fecha }}</p>
+<p><strong>Detalle:</strong> {{ gasto.detalle }}</p>
+<p><strong>Monto:</strong> ${{ gasto.monto }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'lista_gastos' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

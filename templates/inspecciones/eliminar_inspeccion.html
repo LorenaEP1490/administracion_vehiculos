@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Inspección{% endblock %}
+
+{% block content %}
+<h2>¿Estás seguro de que deseas eliminar esta inspección?</h2>
+<p><strong>Vehículo:</strong> {{ inspeccion.vehiculo.dominio }}</p>
+<p><strong>Fecha:</strong> {{ inspeccion.fecha }}</p>
+<p><strong>Responsable:</strong> {{ inspeccion.responsable }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'lista_inspecciones' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

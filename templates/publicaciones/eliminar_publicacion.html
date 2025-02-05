@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Publicación{% endblock %}
+
+{% block content %}
+<h2>¿Estás seguro de que deseas eliminar esta publicación?</h2>
+<p><strong>Fecha:</strong> {{ publicacion.fecha_publicacion }}</p>
+<p><strong>Plataforma:</strong> {{ publicacion.plataforma }}</p>
+<p><strong>Precio:</strong> ${{ publicacion.precio }} {{ publicacion.moneda }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'lista_publicaciones' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

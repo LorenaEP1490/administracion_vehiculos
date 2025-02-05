@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Inspecciones{% endblock %}
+
+{% block content %}
+<h2>Lista de Inspecciones para el Vehículo {{ vehiculo.dominio }}</h2>
+<a href="{% url 'crear_inspeccion_accesorios' %}" class="btn btn-success mb-3">Nueva Inspección de Accesorios</a>
+<a href="{% url 'crear_inspeccion_mecanica' %}" class="btn btn-success mb-3">Nueva Inspección Mecánica</a>
+<a href="{% url 'crear_inspeccion_exterior' %}" class="btn btn-success mb-3">Nueva Inspección Exterior</a>
+<a href="{% url 'crear_inspeccion_interior' %}" class="btn btn-success mb-3">Nueva Inspección Interior</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tipo de Inspección</th>
+            <th>Fecha</th>
+            <th>Responsable</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inspeccion in inspecciones.accesorios %}
+        <tr>
+            <td>Accesorios</td>
+            <td>{{ inspeccion.fecha }}</td>
+            <td>{{ inspeccion.responsable }}</td>
+            <td>
+                <a href="{% url 'editar_inspeccion_accesorios' inspeccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar_inspeccion_accesorios' inspeccion.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for inspeccion in inspecciones.mecanica %}
+        <tr>
+            <td>Mecánica</td>
+            <td>{{ inspeccion.fecha }}</td>
+            <td>{{ inspeccion.responsable }}</td>
+            <td>
+                <a href="{% url 'editar_inspeccion_mecanica' inspeccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar_inspeccion_mecanica' inspeccion.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for inspeccion in inspecciones.exterior %}
+        <tr>
+            <td>Exterior</td>
+            <td>{{ inspeccion.fecha }}</td>
+            <td>{{ inspeccion.responsable }}</td>
+            <td>
+                <a href="{% url 'editar_inspeccion_exterior' inspeccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar_inspeccion_exterior' inspeccion.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for inspeccion in inspecciones.interior %}
+        <tr>
+            <td>Interior</td>
+            <td>{{ inspeccion.fecha }}</td>
+            <td>{{ inspeccion.responsable }}</td>
+            <td>
+                <a href="{% url 'editar_inspeccion_interior' inspeccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar_inspeccion_interior' inspeccion.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

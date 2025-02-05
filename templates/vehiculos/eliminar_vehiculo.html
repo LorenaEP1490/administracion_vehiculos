@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Vehículo{% endblock %}
+
+{% block content %}
+<h2>¿Estás seguro de que deseas eliminar este vehículo?</h2>
+<p><strong>Dominio:</strong> {{ vehiculo.dominio }}</p>
+<p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
+<p><strong>Modelo:</strong> {{ vehiculo.modelo }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'lista_vehiculos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

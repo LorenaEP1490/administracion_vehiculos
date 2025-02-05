@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Gasto{% endblock %}
+
+{% block content %}
+<h2>Editar Gasto</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+    <a href="{% url 'lista_gastos' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
