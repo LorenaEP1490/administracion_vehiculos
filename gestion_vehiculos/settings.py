@@ -7,7 +7,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Seguridad
 SECRET_KEY = 'django-insecure-tu_clave_secreta_aqui'
 DEBUG = True  # Cambia a False en producción
-ALLOWED_HOSTS = []  # Agrega dominios en producción
+ALLOWED_HOSTS = [
+    "127.0.0.1", 
+    "localhost",
+    "0.0.0.0",  # Para evitar problemas en Codespaces
+]
+
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -99,3 +104,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "/auth/login/"  # Redirigir al login correcto cuando un usuario no está autenticado
 LOGIN_REDIRECT_URL = "/"  # Redirigir al inicio después de iniciar sesión
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+
