@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include  # <-- Asegúrate de que 'include' está importado
-from .views import inicio  # Importar la vista de inicio
+from apps.autenticacion.views import inicio  # Importamos la vista protegida
 
 urlpatterns = [
     path("admin/", admin.site.urls),
