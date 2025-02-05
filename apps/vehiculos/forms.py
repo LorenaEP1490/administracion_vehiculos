@@ -10,7 +10,7 @@ class VehiculoForm(forms.ModelForm):
             "modelo",
             "año",
             "version",
-            "color",
+            "color",  # Asegúrate de que coincida con models.py
             "kilometros",
             "tipo_combustible",
             "transmision",
