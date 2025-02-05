@@ -3,36 +3,47 @@
 {% block title %}Lista de Gastos{% endblock %}
 
 {% block content %}
-<h2>Lista de Gastos para el Vehículo {{ vehiculo.dominio }}</h2>
-<a href="{% url 'crear_gasto' %}" class="btn btn-success mb-3">Registrar Nuevo Gasto</a>
+<div class="container mt-4">
+    <h2 class="text-primary">📊 Lista de Gastos del Vehículo</h2>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Detalle</th>
-            <th>Monto</th>
-            <th>Tipo</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for gasto in gastos %}
-        <tr>
-            <td>{{ gasto.fecha }}</td>
-            <td>{{ gasto.detalle }}</td>
-            <td>${{ gasto.monto }}</td>
-            <td>{{ gasto.tipo }}</td>
-            <td>
-                <a href="{% url 'editar_gasto' gasto.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'eliminar_gasto' gasto.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" class="text-center">No hay gastos registrados.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <div class="card p-3">
+        <p><strong>📌 Vehículo:</strong> {{ vehiculo.dominio }}</p>
+    </div>
+
+    {% if gastos %}
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>📅 Fecha</th>
+                    <th>📌 Detalle</th>
+                    <th>💰 Monto</th>
+                    <th>⚙️ Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gasto in gastos %}
+                <tr>
+                    <td>{{ gasto.fecha }}</td>
+                    <td>{{ gasto.detalle }}</td>
+                    <td>${{ gasto.monto }}</td>
+                    <td>
+                        <a href="{% url 'editar_gasto' gasto.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                        <a href="{% url 'eliminar_gasto' gasto.id %}" class="btn btn-danger btn-sm">❌ Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">🚫 No hay gastos registrados para este vehículo.</p>
+    {% endif %}
+
+    <a href="{% url 'crear_gasto' vehiculo.dominio %}" class="btn btn-success">➕ Agregar Gasto</a>
+
+    {% if vehiculo %}
+        <a href="{% url 'lista_gastos' vehiculo.dominio %}" class="btn btn-secondary">🔙 Volver</a>
+    {% else %}
+        <a href="#" class="btn btn-secondary disabled">🔙 Volver</a>
+    {% endif %}
+</div>
 {% endblock %}

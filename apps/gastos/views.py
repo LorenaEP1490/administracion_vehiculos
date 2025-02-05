@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from .models import Gasto
 from apps.vehiculos.models import Vehiculo
 
+# 📌 Vista para listar los gastos de un vehículo por dominio
 class GastoListView(ListView):
     template_name = "gastos/lista_gastos.html"
     context_object_name = "gastos"
@@ -13,19 +14,28 @@ class GastoListView(ListView):
         vehiculo = get_object_or_404(Vehiculo, dominio=dominio)
         return Gasto.objects.filter(vehiculo=vehiculo)
 
+# 📌 Vista para crear un gasto
 class GastoCreateView(CreateView):
     model = Gasto
     fields = "__all__"
     template_name = "gastos/crear_gasto.html"
-    success_url = reverse_lazy("lista_gastos")
 
+    def get_success_url(self):
+        return reverse_lazy("lista_gastos", kwargs={"dominio": self.object.vehiculo.dominio})
+
+# 📌 Vista para editar un gasto
 class GastoUpdateView(UpdateView):
     model = Gasto
     fields = "__all__"
     template_name = "gastos/editar_gasto.html"
-    success_url = reverse_lazy("lista_gastos")
 
+    def get_success_url(self):
+        return reverse_lazy("lista_gastos", kwargs={"dominio": self.object.vehiculo.dominio})
+
+# 📌 Vista para eliminar un gasto
 class GastoDeleteView(DeleteView):
     model = Gasto
     template_name = "gastos/eliminar_gasto.html"
-    success_url = reverse_lazy("lista_gastos")
+
+    def get_success_url(self):
+        return reverse_lazy("lista_gastos", kwargs={"dominio": self.object.vehiculo.dominio})

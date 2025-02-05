@@ -3,14 +3,24 @@
 {% block title %}Eliminar Gasto{% endblock %}
 
 {% block content %}
-<h2>¿Estás seguro de que deseas eliminar este gasto?</h2>
-<p><strong>Fecha:</strong> {{ gasto.fecha }}</p>
-<p><strong>Detalle:</strong> {{ gasto.detalle }}</p>
-<p><strong>Monto:</strong> ${{ gasto.monto }}</p>
+<div class="container mt-4">
+    <h2 class="text-danger">🚨 ¿Estás seguro de que deseas eliminar este gasto? 🚨</h2>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a href="{% url 'lista_gastos' vehiculo.dominio %}" class="btn btn-secondary">Cancelar</a>
-</form>
+    <div class="card p-3">
+        <p><strong>📅 Fecha:</strong> {{ gasto.fecha }}</p>
+        <p><strong>📌 Detalle:</strong> {{ gasto.detalle }}</p>
+        <p><strong>💰 Monto:</strong> ${{ gasto.monto }}</p>
+    </div>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">❌ Eliminar</button>
+
+        {% if vehiculo %}
+            <a href="{% url 'lista_gastos' vehiculo.dominio %}" class="btn btn-secondary">🔙 Cancelar</a>
+        {% else %}
+            <a href="#" class="btn btn-secondary disabled">🔙 Cancelar</a>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}
