@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .models import InspeccionAccesorios, InspeccionMecanica, InspeccionExterior, InspeccionInterior
 from apps.vehiculos.models import Vehiculo
 
-# Vista para listar inspecciones de un vehículo por dominio
+# 📌 Vista para listar inspecciones de un vehículo por dominio
 class InspeccionListView(ListView):
     template_name = "inspecciones/lista_inspecciones.html"
     context_object_name = "inspecciones"
@@ -19,25 +19,28 @@ class InspeccionListView(ListView):
             "interior": InspeccionInterior.objects.filter(vehiculo=vehiculo),
         }
 
-# Vista para crear una inspección de accesorios
+# 📌 Vista para crear una inspección de accesorios
 class InspeccionAccesoriosCreateView(CreateView):
     model = InspeccionAccesorios
     fields = "__all__"
     template_name = "inspecciones/crear_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
-# Vista para actualizar una inspección de accesorios
+# 📌 Vista para actualizar una inspección de accesorios
 class InspeccionAccesoriosUpdateView(UpdateView):
     model = InspeccionAccesorios
     fields = "__all__"
     template_name = "inspecciones/editar_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
-# Vista para eliminar una inspección de accesorios
+# 📌 Vista para eliminar una inspección de accesorios
 class InspeccionAccesoriosDeleteView(DeleteView):
     model = InspeccionAccesorios
     template_name = "inspecciones/eliminar_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
