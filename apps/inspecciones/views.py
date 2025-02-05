@@ -24,17 +24,20 @@ class InspeccionAccesoriosCreateView(CreateView):
     model = InspeccionAccesorios
     fields = "__all__"
     template_name = "inspecciones/crear_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones")
+    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
 
 # Vista para actualizar una inspección de accesorios
 class InspeccionAccesoriosUpdateView(UpdateView):
     model = InspeccionAccesorios
     fields = "__all__"
     template_name = "inspecciones/editar_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones")
+    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
 
 # Vista para eliminar una inspección de accesorios
 class InspeccionAccesoriosDeleteView(DeleteView):
     model = InspeccionAccesorios
     template_name = "inspecciones/eliminar_inspeccion.html"
-    success_url = reverse_lazy("lista_inspecciones")
+    success_url = reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+

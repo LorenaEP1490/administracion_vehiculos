@@ -31,7 +31,16 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white disabled" id="link-inspecciones" href="{% url 'lista_inspecciones' %}">🔧 Inspecciones</a>
+                    <a class="nav-link text-white" href="#" id="link-inspecciones">🔧 Inspecciones</a>
+                    <script>
+                        document.getElementById("link-inspecciones").addEventListener("click", function(event) {
+                            event.preventDefault();
+                            let dominio = prompt("Ingrese el dominio del vehículo:");
+                            if (dominio) {
+                                window.location.href = `/inspecciones/${dominio}/`;
+                            }
+                        });
+                    </script>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white disabled" id="link-gastos" href="{% url 'lista_gastos' %}">💰 Gastos</a>
