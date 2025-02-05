@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import registro, iniciar_sesion, cerrar_sesion
+from django.contrib.auth.views import LoginView, LogoutView
+from .views import registro
 
 urlpatterns = [
+    path("login/", LoginView.as_view(template_name="autenticacion/login.html"), name="login"),
+    path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("registro/", registro, name="registro"),
-    path("login/", iniciar_sesion, name="login"),
-    path("logout/", cerrar_sesion, name="logout"),
 ]
