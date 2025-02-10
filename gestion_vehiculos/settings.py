@@ -102,8 +102,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Configuración por defecto del campo de clave primaria
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = "/auth/login/"  # Redirigir al login correcto cuando un usuario no está autenticado
-LOGIN_REDIRECT_URL = "/"  # Redirigir al inicio después de iniciar sesión
+LOGIN_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGIN_REDIRECT_URL = "/"
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",

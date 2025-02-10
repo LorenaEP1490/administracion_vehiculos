@@ -19,46 +19,18 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="buscarVehiculoLink">🔎 Buscar Vehículo</a>
-                    <script>
-                        document.getElementById("buscarVehiculoLink").addEventListener("click", function(event) {
-                            event.preventDefault();
-                            let dominio = prompt("Ingrese el dominio del vehículo:");
-                            if (dominio) {
-                                window.location.href = `/vehiculos/buscar/${dominio}/`;
-                            }
-                        });
-                    </script>
-
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" id="link-inspecciones">🔧 Inspecciones</a>
-                    <script>
-                        document.getElementById("link-inspecciones").addEventListener("click", function(event) {
-                            event.preventDefault();
-                            let dominio = prompt("Ingrese el dominio del vehículo:");
-                            if (dominio) {
-                                window.location.href = `/inspecciones/${dominio}/`;
-                            }
-                        });
-                    </script>
+                    <a class="nav-link text-white disabled" id="link-inspecciones" href="#">🔧 Inspecciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" id="link-gastos">💰 Gastos</a>
-                    <script>
-                        document.getElementById("link-gastos").addEventListener("click", function(event) {
-                            event.preventDefault();
-                            let dominio = prompt("Ingrese el dominio del vehículo:");
-                            if (dominio) {
-                                window.location.href = `/gastos/${dominio}/`;
-                            }
-                        });
-                    </script>
+                    <a class="nav-link text-white disabled" id="link-gastos" href="#">💰 Gastos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white disabled" id="link-publicaciones" href="{% url 'lista_publicaciones' %}">📢 Publicaciones</a>
+                    <a class="nav-link text-white disabled" id="link-publicaciones" href="#">📢 Publicaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white disabled" id="link-transferencias" href="{% url 'lista_transferencias' %}">📜 Transferencias</a>
+                    <a class="nav-link text-white disabled" id="link-transferencias" href="#">📜 Transferencias</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="{% url 'logout' %}">🚪 Cerrar Sesión</a>
@@ -73,7 +45,42 @@
     </div>
 
     <script>
-        // Deshabilitar opciones hasta que se seleccione un vehículo con dominio
+        // Función para solicitar dominio antes de acceder a las secciones
+        function solicitarDominio(urlBase) {
+            let dominio = prompt("Ingrese el dominio del vehículo:");
+            if (dominio) {
+                window.location.href = `${urlBase}${dominio}/`;
+            }
+        }
+
+        // Evento para Buscar Vehículo
+        document.getElementById("buscarVehiculoLink").addEventListener("click", function(event) {
+            event.preventDefault();
+            solicitarDominio("/vehiculos/buscar/");
+        });
+
+        // Eventos para las secciones que requieren dominio
+        document.getElementById("link-inspecciones").addEventListener("click", function(event) {
+            event.preventDefault();
+            solicitarDominio("/inspecciones/");
+        });
+
+        document.getElementById("link-gastos").addEventListener("click", function(event) {
+            event.preventDefault();
+            solicitarDominio("/gastos/");
+        });
+
+        document.getElementById("link-publicaciones").addEventListener("click", function(event) {
+            event.preventDefault();
+            solicitarDominio("/publicaciones/");
+        });
+
+        document.getElementById("link-transferencias").addEventListener("click", function(event) {
+            event.preventDefault();
+            solicitarDominio("/transferencias/");
+        });
+
+        // Habilitar opciones si ya se seleccionó un dominio previamente
         let dominioSeleccionado = localStorage.getItem("dominioSeleccionado");
         if (dominioSeleccionado) {
             document.getElementById("link-inspecciones").classList.remove("disabled");
