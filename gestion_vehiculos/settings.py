@@ -13,7 +13,6 @@ ALLOWED_HOSTS = [
     "0.0.0.0",  # Para evitar problemas en Codespaces
 ]
 
-
 # Aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -82,8 +81,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Modelo de usuario personalizado
 AUTH_USER_MODEL = "autenticacion.Usuario"
-
 
 # Configuración de localización
 LANGUAGE_CODE = 'es-ar'  # Español Argentina
@@ -94,18 +93,21 @@ USE_TZ = True
 # Configuración de archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Configuración de archivos de medios (si subirás imágenes o documentos)
+# Configuración de archivos de medios (para subir imágenes o documentos)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Configuración por defecto del campo de clave primaria
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Configuración de LOGIN y LOGOUT
 LOGIN_URL = "/auth/login/"
 LOGOUT_REDIRECT_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/"
 
+# Protege el sistema contra ataques CSRF
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
@@ -113,4 +115,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://localhost:8000",
 ]
 
-
+# Redirección de usuarios no autenticados
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra sesión al cerrar el navegador
+SESSION_COOKIE_AGE = 3600  # Expira la sesión en 1 hora (ajustable)
+SESSION_SAVE_EVERY_REQUEST = True  # Refresca la sesión en cada solicitud
