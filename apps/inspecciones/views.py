@@ -2,6 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import InspeccionAccesorios, InspeccionMecanica, InspeccionExterior, InspeccionInterior
+from .forms import (
+    InspeccionAccesoriosForm, 
+    InspeccionMecanicaForm, 
+    InspeccionExteriorForm, 
+    InspeccionInteriorForm
+)
 from apps.vehiculos.models import Vehiculo
 
 # 🛠 Vista para listar todas las inspecciones de un vehículo por dominio
@@ -11,30 +17,20 @@ class InspeccionListView(ListView):
 
     def get_queryset(self):
         dominio = self.kwargs.get("dominio")
-        self.vehiculo = get_object_or_404(Vehiculo, dominio=dominio)
+        vehiculo = get_object_or_404(Vehiculo, dominio=dominio)
         return {
-            "accesorios": InspeccionAccesorios.objects.filter(vehiculo=self.vehiculo),
-            "mecanica": InspeccionMecanica.objects.filter(vehiculo=self.vehiculo),
-            "exterior": InspeccionExterior.objects.filter(vehiculo=self.vehiculo),
-            "interior": InspeccionInterior.objects.filter(vehiculo=self.vehiculo),
+            "vehiculo": vehiculo,
+            "accesorios": InspeccionAccesorios.objects.filter(vehiculo=vehiculo),
+            "mecanica": InspeccionMecanica.objects.filter(vehiculo=vehiculo),
+            "exterior": InspeccionExterior.objects.filter(vehiculo=vehiculo),
+            "interior": InspeccionInterior.objects.filter(vehiculo=vehiculo),
         }
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["vehiculo"] = self.vehiculo
-        return context
-
-
-### 🔧 **Inspección de Accesorios**
+# 🔧 **Inspección de Accesorios**
 class InspeccionAccesoriosCreateView(CreateView):
     model = InspeccionAccesorios
-    fields = "__all__"
+    form_class = InspeccionAccesoriosForm
     template_name = "inspecciones/crear_inspeccion.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["vehiculo"] = get_object_or_404(Vehiculo, dominio=self.kwargs.get("dominio"))
-        return context
 
     def form_valid(self, form):
         form.instance.vehiculo = get_object_or_404(Vehiculo, dominio=self.kwargs.get("dominio"))
@@ -43,45 +39,14 @@ class InspeccionAccesoriosCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
-
-### 🔧 **Inspección Mecánica**
-class InspeccionMecanicaCreateView(InspeccionAccesoriosCreateView):
-    model = InspeccionMecanica
-
-
-### 🚗 **Inspección Exterior**
-class InspeccionExteriorCreateView(InspeccionAccesoriosCreateView):
-    model = InspeccionExterior
-
-
-### 🛋 **Inspección Interior**
-class InspeccionInteriorCreateView(InspeccionAccesoriosCreateView):
-    model = InspeccionInterior
-
-
-# **Actualizar Inspecciones**
 class InspeccionAccesoriosUpdateView(UpdateView):
     model = InspeccionAccesorios
-    fields = "__all__"
+    form_class = InspeccionAccesoriosForm
     template_name = "inspecciones/editar_inspeccion.html"
 
     def get_success_url(self):
         return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
-
-class InspeccionMecanicaUpdateView(InspeccionAccesoriosUpdateView):
-    model = InspeccionMecanica
-
-
-class InspeccionExteriorUpdateView(InspeccionAccesoriosUpdateView):
-    model = InspeccionExterior
-
-
-class InspeccionInteriorUpdateView(InspeccionAccesoriosUpdateView):
-    model = InspeccionInterior
-
-
-# **Eliminar Inspecciones**
 class InspeccionAccesoriosDeleteView(DeleteView):
     model = InspeccionAccesorios
     template_name = "inspecciones/eliminar_inspeccion.html"
@@ -89,14 +54,86 @@ class InspeccionAccesoriosDeleteView(DeleteView):
     def get_success_url(self):
         return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
 
-
-class InspeccionMecanicaDeleteView(InspeccionAccesoriosDeleteView):
+# 🔧 **Inspección Mecánica**
+class InspeccionMecanicaCreateView(CreateView):
     model = InspeccionMecanica
+    form_class = InspeccionMecanicaForm
+    template_name = "inspecciones/crear_inspeccion.html"
 
+    def form_valid(self, form):
+        form.instance.vehiculo = get_object_or_404(Vehiculo, dominio=self.kwargs.get("dominio"))
+        return super().form_valid(form)
 
-class InspeccionExteriorDeleteView(InspeccionAccesoriosDeleteView):
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionMecanicaUpdateView(UpdateView):
+    model = InspeccionMecanica
+    form_class = InspeccionMecanicaForm
+    template_name = "inspecciones/editar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionMecanicaDeleteView(DeleteView):
+    model = InspeccionMecanica
+    template_name = "inspecciones/eliminar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+# 🚗 **Inspección Exterior**
+class InspeccionExteriorCreateView(CreateView):
     model = InspeccionExterior
+    form_class = InspeccionExteriorForm
+    template_name = "inspecciones/crear_inspeccion.html"
 
+    def form_valid(self, form):
+        form.instance.vehiculo = get_object_or_404(Vehiculo, dominio=self.kwargs.get("dominio"))
+        return super().form_valid(form)
 
-class InspeccionInteriorDeleteView(InspeccionAccesoriosDeleteView):
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionExteriorUpdateView(UpdateView):
+    model = InspeccionExterior
+    form_class = InspeccionExteriorForm
+    template_name = "inspecciones/editar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionExteriorDeleteView(DeleteView):
+    model = InspeccionExterior
+    template_name = "inspecciones/eliminar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+# 🛋 **Inspección Interior**
+class InspeccionInteriorCreateView(CreateView):
     model = InspeccionInterior
+    form_class = InspeccionInteriorForm
+    template_name = "inspecciones/crear_inspeccion.html"
+
+    def form_valid(self, form):
+        form.instance.vehiculo = get_object_or_404(Vehiculo, dominio=self.kwargs.get("dominio"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionInteriorUpdateView(UpdateView):
+    model = InspeccionInterior
+    form_class = InspeccionInteriorForm
+    template_name = "inspecciones/editar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})
+
+class InspeccionInteriorDeleteView(DeleteView):
+    model = InspeccionInterior
+    template_name = "inspecciones/eliminar_inspeccion.html"
+
+    def get_success_url(self):
+        return reverse_lazy("lista_inspecciones", kwargs={"dominio": self.object.vehiculo.dominio})

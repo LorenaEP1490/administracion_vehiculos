@@ -8,7 +8,7 @@ from .views import (
 )
 
 urlpatterns = [
-    # Vista principal de inspecciones por vehículo
+    # 🔎 Vista principal de inspecciones de un vehículo por dominio
     path('<str:dominio>/', InspeccionListView.as_view(), name='lista_inspecciones'),
 
     # 🔧 Inspección de Accesorios
