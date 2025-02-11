@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,8 @@
 </head>
 <body>
     <div class="d-flex">
-        <!-- Menú lateral -->
+        {% if user.is_authenticated %}
+        <!-- Menú lateral (Solo visible si el usuario ha iniciado sesión) -->
         <nav class="bg-primary text-white p-3 sidebar">
             <h4 class="text-center">Menú</h4>
             <ul class="nav flex-column">
@@ -37,6 +38,7 @@
                 </li>
             </ul>
         </nav>
+        {% endif %}
 
         <!-- Contenido principal -->
         <div class="container mt-4">
@@ -49,44 +51,48 @@
         function solicitarDominio(urlBase) {
             let dominio = prompt("Ingrese el dominio del vehículo:");
             if (dominio) {
+                localStorage.setItem("dominioSeleccionado", dominio);
                 window.location.href = `${urlBase}${dominio}/`;
             }
         }
 
-        // Evento para Buscar Vehículo
-        document.getElementById("buscarVehiculoLink").addEventListener("click", function(event) {
-            event.preventDefault();
-            solicitarDominio("/vehiculos/buscar/");
-        });
+        // Verificar si el usuario está autenticado antes de asignar eventos
+        if ("{{ user.is_authenticated }}" === "True") {
+            // Evento para Buscar Vehículo
+            let buscarVehiculoLink = document.getElementById("buscarVehiculoLink");
+            if (buscarVehiculoLink) {
+                buscarVehiculoLink.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    solicitarDominio("/vehiculos/buscar/");
+                });
+            }
 
-        // Eventos para las secciones que requieren dominio
-        document.getElementById("link-inspecciones").addEventListener("click", function(event) {
-            event.preventDefault();
-            solicitarDominio("/inspecciones/");
-        });
+            // Eventos para las secciones que requieren dominio
+            let linksRequierenDominio = [
+                { id: "link-inspecciones", url: "/inspecciones/" },
+                { id: "link-gastos", url: "/gastos/" },
+                { id: "link-publicaciones", url: "/publicaciones/" },
+                { id: "link-transferencias", url: "/transferencias/" }
+            ];
 
-        document.getElementById("link-gastos").addEventListener("click", function(event) {
-            event.preventDefault();
-            solicitarDominio("/gastos/");
-        });
+            linksRequierenDominio.forEach(linkData => {
+                let link = document.getElementById(linkData.id);
+                if (link) {
+                    link.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        solicitarDominio(linkData.url);
+                    });
+                }
+            });
 
-        document.getElementById("link-publicaciones").addEventListener("click", function(event) {
-            event.preventDefault();
-            solicitarDominio("/publicaciones/");
-        });
-
-        document.getElementById("link-transferencias").addEventListener("click", function(event) {
-            event.preventDefault();
-            solicitarDominio("/transferencias/");
-        });
-
-        // Habilitar opciones si ya se seleccionó un dominio previamente
-        let dominioSeleccionado = localStorage.getItem("dominioSeleccionado");
-        if (dominioSeleccionado) {
-            document.getElementById("link-inspecciones").classList.remove("disabled");
-            document.getElementById("link-gastos").classList.remove("disabled");
-            document.getElementById("link-publicaciones").classList.remove("disabled");
-            document.getElementById("link-transferencias").classList.remove("disabled");
+            // Habilitar opciones si ya se seleccionó un dominio previamente
+            let dominioSeleccionado = localStorage.getItem("dominioSeleccionado");
+            if (dominioSeleccionado) {
+                linksRequierenDominio.forEach(linkData => {
+                    let link = document.getElementById(linkData.id);
+                    if (link) link.classList.remove("disabled");
+                });
+            }
         }
     </script>
 </body>

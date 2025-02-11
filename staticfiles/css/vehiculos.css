@@ -1,0 +1,13 @@
+.vehiculos-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.table thead {
+    background-color: #004694;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #e3f2fd;
+}

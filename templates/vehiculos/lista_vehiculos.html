@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Lista de Vehículos</h2>
-<a href="{% url 'crear_vehiculo' %}" class="btn btn-success mb-3">Agregar Vehículo</a>
+<a href="{% url 'crear_vehiculo' %}" class="btn btn-success mb-3">➕ Agregar Vehículo</a>
 
 <table class="table table-bordered">
     <thead>
@@ -22,11 +22,16 @@
             <td>{{ vehiculo.dominio }}</td>
             <td>{{ vehiculo.marca }}</td>
             <td>{{ vehiculo.modelo }}</td>
-            <td>{{ vehiculo.año }}</td>
+            <td>{{ vehiculo.anio }}</td>
             <td>
-                <a href="{% url 'editar_vehiculo' vehiculo.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'eliminar_vehiculo' vehiculo.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                <a href="{% url 'editar_vehiculo' vehiculo.pk %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                <a href="{% url 'eliminar_vehiculo' vehiculo.pk %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                <a href="{% url 'lista_inspecciones' vehiculo.dominio %}" class="btn btn-info btn-sm">🔍 Inspeccionar</a>
             </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">No hay vehículos registrados.</td>
         </tr>
         {% endfor %}
     </tbody>

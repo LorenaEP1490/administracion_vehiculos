@@ -19,6 +19,6 @@ urlpatterns = [
     path("publicaciones/", include("apps.publicaciones.urls")),
     path("transferencias/", include("apps.transferencias.urls")),
 
-    # Página de inicio protegida con login
-    path("", login_required(inicio), name="inicio"),
+    # Proteger la página de inicio con login_required
+    path("", login_required(inicio, login_url="login"), name="inicio"),
 ]

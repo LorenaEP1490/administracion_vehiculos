@@ -1,0 +1,13 @@
+.transferencias-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.table thead {
+    background-color: #6c757d;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #e2e3e5;
+}

@@ -1,0 +1,13 @@
+.gastos-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.table thead {
+    background-color: #ffc107;
+    color: black;
+}
+
+.table tbody tr:hover {
+    background-color: #fff3cd;
+}
